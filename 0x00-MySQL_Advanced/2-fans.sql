@@ -2,11 +2,11 @@
 -- of non-unique fans. Column must be origin and nb_fans
 -- Create a view to rank country origins by the number of fans
 SELECT
-  origin,
-  COUNT(*) AS nb_fans
+    origin,
+    COUNT(*) AS nb_fans
 FROM
-  bands
+    bands
 GROUP BY
-  origin
+    origin
 ORDER BY
-  nb_fans DESC;
+    nb_fans DESC;
