@@ -7,7 +7,7 @@ SELECT
   origin,
   COUNT(*) AS nb_fans
 FROM
-  bands
+  metal_bands
 GROUP BY
   origin
 ORDER BY
