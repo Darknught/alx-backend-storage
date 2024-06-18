@@ -12,7 +12,7 @@ def nginx_stats():
     collection = db['nginx']
 
     # get the number of documents in the collection
-    total_logs = collection.count_documents({})
+    total_logs = collection.estimated_document_count()
 
     # Print the total number of logs
     print(f"{total_logs} logs")
