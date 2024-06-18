@@ -21,15 +21,26 @@ def nginx_stats():
 
     # Print the method stats
     print("Methods:")
+
+    # Get the unique methods using distinct()
     methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
+
+    # Use aggregate() to get the count for each method
+    method_counts = collection.aggregate([
+        {"$group": {"_id": "$method", "count": {"$sum": 1}}},
+        {"$sort": {"_id": 1}}
+    ])
+
     for method in methods:
-        count = collection.count_documents({"method": method})
+        count = next(
+                (m for m in method_counts if m["_id"] == method),
+                {"count": 0})["count"]
         print(f"\tmethod {method}: {count}")
 
     # Print the number of documents with method GET and path / status
     stats_check = collection.count_documents(
             {"method": "GET", "path": "/status"})
-    print(f"{stats_check} status check ")
+    print(f"{stats_check} status check")
 
     # Top 10 most present IPs
     pipeline = [
