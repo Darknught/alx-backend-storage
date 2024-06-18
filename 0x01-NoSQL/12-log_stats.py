@@ -5,7 +5,7 @@ from pymongo import MongoClient
 
 def nginx_stats():
     """ The function to execute the script."""
-    client = MongoClient('mongodb:///127.0.0.1:27017')
+    client = MongoClient('mongodb://127.0.0.1:27017')
 
     # Connect to the database and collection
     db = client['logs']
@@ -28,3 +28,7 @@ def nginx_stats():
     stats_check = collection.count_documents(
             {"method": "GET", "path": "/status"})
     print(f"{stats_check} status check ")
+
+
+if __name__ == "__main__":
+    nginx_stats()
