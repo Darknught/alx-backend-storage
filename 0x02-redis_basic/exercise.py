@@ -20,8 +20,8 @@ class Cache:
         using the random key and return the key.
         """
         key = str(uuid.uuid4())
-        if isinstance(data, str):
-            self._redis.set(key, data.encode())
+        if isinstance(data, (int, float)):
+            self._redis.set(key, str(data))
         else:
             self._redis.set(key, data)
         return key
@@ -47,7 +47,13 @@ class Cache:
         if value is None:
             return None
         if fn is None:
-            return value.decode()
+            try:
+                return int(value)
+            except ValueError:
+                try:
+                    return float(value)
+                except ValueError:
+                    return value.decode()
         else:
             return fn(value)
 
