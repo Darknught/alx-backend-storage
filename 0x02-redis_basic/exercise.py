@@ -26,14 +26,17 @@ class Cache:
             self._redis.set(key, data)
         return key
 
-    def get(self, key: str, fn: Optional[Callable[[bytes], Union[str, int, float]]] = None) -> Optional[Union[str, int, float]]:
+    def get(
+            self, key: str, fn: Optional[Callable[[bytes], Union[
+                str, int, float]]] = None) -> Optional[Union[str, int, float]]:
         """
         Retrieves the data stored under the given key from the Redis cache.
 
         Args:
             key (str): The key of the data to be retrieved.
             fn (Optional[Callable[[bytes], Union[str, int, float]]]):
-            An optional function to convert the retrieved data to the desired format.
+            An optional function to convert the retrieved data to the
+            desired format.
 
         Returns:
             Optional[Union[str, int, float]]: The retrieved data, converted
