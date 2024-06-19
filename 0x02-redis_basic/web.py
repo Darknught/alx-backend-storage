@@ -9,6 +9,7 @@ from functools import wraps
 # Initialize Redis client
 redis_client = redis.Redis()
 
+
 def count_calls_and_cache(func):
     """
     Decorator function to count the number of times a URL is accessed
@@ -40,6 +41,7 @@ def count_calls_and_cache(func):
 
     return wrapper
 
+
 @count_calls_and_cache
 def get_page(url: str) -> str:
     """
@@ -59,4 +61,5 @@ def get_page(url: str) -> str:
     if response.status_code == 200:
         return response.text
     else:
-        return f"Error fetching URL: {url}. Status code: {response.status_code}"
+        return f"Error fetching URL: {url}. Status code: {
+          response.status_code}"
