@@ -126,3 +126,20 @@ class Cache:
             or None if the key does not exist.
         """
         return self.get(key, lambda x: int(x.decode()))
+
+    def replay(self, method_name: str) -> None:
+        """
+        Displays the history of calls for a particular function/method.
+
+        Args:
+            method_name (str): The qualified name of the method to replay.
+        """
+        key_inputs = method_name + ":inputs"
+        key_outputs = method_name + ":outputs"
+
+        inputs = self._redis.lrange(key_inputs, 0, -1)
+        outputs = self._redis.lrange(key_outputs, 0, -1)
+
+        print(f"History of calls for method '{method_name}':")
+        for i, (inp, out) in enumerate(zip(inputs, outputs), start=1):
+            print(f"Call {i}: Input - {inp.decode()}, Output - {out.decode()}")
