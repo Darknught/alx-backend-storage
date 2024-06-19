@@ -127,19 +127,29 @@ class Cache:
         """
         return self.get(key, lambda x: int(x.decode()))
 
-    def replay(self, method_name: str) -> None:
+    def replay(self, method: Callable) -> None:
         """
-        Displays the history of calls for a particular function/method.
+        Displays the history of calls for a particular method.
 
         Args:
-            method_name (str): The qualified name of the method to replay.
+            method (Callable): The method/function whose
+            history of calls to display.
         """
-        key_inputs = method_name + ":inputs"
-        key_outputs = method_name + ":outputs"
+        # Prepare Redis keys for inputs and outputs
+        key_inputs = method.__qualname__ + ":inputs"
+        key_outputs = method.__qualname__ + ":outputs"
 
+        # Fetch inputs and outputs lists from Redis
         inputs = self._redis.lrange(key_inputs, 0, -1)
         outputs = self._redis.lrange(key_outputs, 0, -1)
 
-        print(f"History of calls for method '{method_name}':")
-        for i, (inp, out) in enumerate(zip(inputs, outputs), start=1):
-            print(f"Call {i}: Input - {inp.decode()}, Output - {out.decode()}")
+        # Print header with method name and number of calls
+        print(f"{method.__qualname__} was called {len(inputs)} times:")
+
+        # Iterate over inputs and outputs using zip
+        for inp, out in zip(inputs, outputs):
+            # Decode input (stored as bytes)
+            input_str = inp.decode()
+
+            # Print formatted output
+            print(f"{method.__qualname__}(*{input_str}) -> {out.decode()}")
