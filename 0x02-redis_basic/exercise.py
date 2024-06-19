@@ -20,5 +20,8 @@ class Cache:
         using the random key and return the key.
         """
         key = str(uuid.uuid4())
-        self._redis.set(key, str(data).encode())
+        if isinstance(data, str):
+            self._redis.set(key, data.encode())
+        else:
+            self._redis.set(key, data)
         return key
