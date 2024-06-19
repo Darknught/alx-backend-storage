@@ -57,6 +57,7 @@ class Cache:
         self._redis.flushdb()
 
     @call_history
+    @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """ Method takes a data arg and returns a string.
         It generates a random key using uuid and store the input data in Redis
