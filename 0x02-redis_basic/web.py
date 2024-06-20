@@ -52,3 +52,11 @@ if __name__ == "__main__":
     url = "http://google.com"
     print(get_page(url))
     print(redis_client.get(f"count:{url}"))
+
+    time.sleep(5)  # Wait for 5 seconds
+    print(get_page(url))  # Second call should use the cached content
+    print(redis_client.get(f"count:{url}"))  # Should print the count (2)
+
+    time.sleep(10)  # Wait for the cache to expire
+    print(get_page(url))
+    print(redis_client.get(f"count:{url}"))  # Should print the count (3)
