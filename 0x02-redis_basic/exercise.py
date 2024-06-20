@@ -92,11 +92,8 @@ class Cache:
             return None
         if fn is None:
             try:
-                return int(value)
+                return int(value) if value.isdigit() else float(value)
             except (ValueError, TypeError):
-                try:
-                    return float(value)
-                except (ValueError, TypeError):
                     return value.decode()
         else:
             try:
