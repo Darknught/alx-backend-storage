@@ -45,3 +45,9 @@ def get_page(url: str) -> str:
             f"Status code: {response.status_code}"
         )
         return error_message
+
+# Example usage for testing
+if __name__ == "__main__":
+    url = "http://google.com"
+    print(get_page(url))
+    print(redis_client.get(f"count:{url}"))
