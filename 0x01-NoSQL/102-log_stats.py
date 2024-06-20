@@ -26,10 +26,10 @@ def nginx_stats():
     methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
 
     # Use aggregate() to get the count for each method
-    method_counts = collection.aggregate([
+    method_counts = list(collection.aggregate([
         {"$group": {"_id": "$method", "count": {"$sum": 1}}},
         {"$sort": {"_id": 1}}
-    ])
+    ]))
 
     for method in methods:
         count = next(
