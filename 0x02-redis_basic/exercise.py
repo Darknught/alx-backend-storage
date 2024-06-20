@@ -140,15 +140,18 @@ class Cache:
 
         # Fetch inputs and outputs lists from Redis
         inputs = self._redis.lrange(key_inputs, 0, -1)
-        outputs = self._redis.lrange(key_outputs, 0, -1)
 
         # Print header with method name and number of calls
         print(f"{method.__qualname__} was called {len(inputs)} times:")
 
         # Iterate over inputs and outputs using zip
-        for inp, out in zip(inputs, outputs):
+        for inp in inputs:
             # Decode input (stored as bytes)
             input_str = inp.decode()
 
+            # Fetch corresponding output from Redis
+            output = self._redis.lindex(
+                    key_outputs, inputs.index(inp)).decode()
+
             # Print formatted output
-            print(f"{method.__qualname__}(*{input_str}) -> {out.decode()}")
+            print(f"{method.__qualname__}(*{input_str}) -> {output}")
