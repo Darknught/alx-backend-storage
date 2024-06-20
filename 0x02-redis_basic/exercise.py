@@ -48,6 +48,7 @@ def count_calls(method: Callable) -> Callable:
 
 
 class Cache:
+    """ Class Cache."""
     def __init__(self):
         """ Init method creates a new Redis client instance using redis.Redis()
         and stores it as a private variable and clears the entire Redis databas
