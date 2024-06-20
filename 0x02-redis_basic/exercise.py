@@ -93,10 +93,10 @@ class Cache:
         if fn is None:
             try:
                 return int(value)
-            except ValueError:
+            except (ValueError, TypeError):
                 try:
                     return float(value)
-                except ValueError:
+                except (ValueError, TypeError):
                     return value.decode()
         else:
             return fn(value)
