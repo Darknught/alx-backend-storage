@@ -46,6 +46,7 @@ def get_page(url: str) -> str:
         )
         return error_message
 
+
 # Example usage for testing
 if __name__ == "__main__":
     url = "http://google.com"
