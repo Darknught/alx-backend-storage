@@ -99,7 +99,10 @@ class Cache:
                 except (ValueError, TypeError):
                     return value.decode()
         else:
-            return fn(value)
+            try:
+                return fn(value)
+            except Exception:
+                raise ValueError("Error converting value using the provided callable")
 
     def get_str(self, key: str) -> Optional[str]:
         """
